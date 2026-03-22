@@ -1,0 +1,29 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gosimple
+
+linters-settings:
+  errcheck:
+    # Report on assignments of errors to the blank identifier.
+    check-blank: true
+    # Report on type assertions without an ok variable.
+    check-type-assertions: true
+  govet:
+    enable-all: true
+
+issues:
+  # Don't limit the number of issues per linter.
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    # Example files are intentionally simplified; relax error-checking there.
+    - path: ^examples/
+      linters:
+        - errcheck

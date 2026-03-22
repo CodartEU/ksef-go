@@ -1,0 +1,55 @@
+# Claude Code Settings
+./CLAUDE.md
+.claude/settings.local.json
+.claude/sessions/
+
+# Generated Artifacts
+.transcripts/
+.task_outputs/
+.tasks/
+.teams/
+
+# Optional: Ignore if not sharing prompt rules
+# .claude/rules/
+
+# Binaries and build output
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/bin/
+/dist/
+
+# Go workspace and module cache
+go.sum.bak
+vendor/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Test key material — keep only examples, never real keys
+testdata/*.pem
+!testdata/*.pem.example
+
+# IDE and editor artifacts
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Coverage and profiling output
+coverage.out
+coverage.html
+*.prof
+cpu.out
+mem.out
