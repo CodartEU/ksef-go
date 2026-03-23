@@ -1,77 +1,4 @@
-linters-settings:
-  depguard:
-    rules:
-      main:
-        allow:
-          - "$gostd"
-          - "github.com"
-  dupl:
-    threshold: 100
-  funlen:
-    lines: 100
-    statements: 50
-  goconst:
-    min-len: 2
-    min-occurrences: 3
-  gocritic:
-    enabled-checks:
-      - deferInLoop
-      - deferUnlambda
-      - dupImport
-      - emptyFallthrough
-      - emptyStringTest
-      - octalLiteral
-  gocyclo:
-    min-complexity: 15
-  gofmt:
-    rewrite-rules:
-      - pattern: "interface{}"
-        replacement: "any"
-      - pattern: "a[b:len(a)]"
-        replacement: "a[b:]"
-  govet:
-    # settings:
-    #   shadow:
-    #     strict: true
-    enable-all: true
-    disable:
-      - fieldalignment
-  lll:
-    line-length: 120
-    tab-width: 4
-  misspell:
-    locale: US
-  nolintlint:
-    allow-unused: false
-    require-explanation: false
-    require-specific: true
-  tagalign:
-    align: true
-    sort: true
-    order:
-      - json #json tag first, other tags alphabetically
-    strict: true
-  testifylint:
-    enable-all: true
-  usestdlibvars:
-    time-month: true
-    time-layout: true
-    crypto-hash: true
-    default-rpc-path: true
-    sql-isolation-level: true
-    tls-signature-scheme: true
-    constant-kind: true
-
-# Excluding configuration per-path, per-linter, per-text and per-source
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - wrapcheck
-        - errcheck
-    - path: ^examples\
-      linters:
-        - errcheck
+version: "2"
 
 linters:
   disable-all: true
@@ -90,7 +17,7 @@ linters:
     - errchkjson
     - errname
     - errorlint
-    - execinquery
+    # execinquery: removed in v2 (was deprecated, use sqlclosecheck + rowserrcheck instead)
     - forcetypeassert
     - funlen
     - ginkgolinter
@@ -100,7 +27,7 @@ linters:
     - gocritic
     - gofmt
     - gofumpt
-    - gomnd
+    - mnd           # renamed from gomnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -133,7 +60,7 @@ linters:
     - staticcheck
     - stylecheck
     - tagalign
-    - tenv
+    - usetesting     # replaces tenv (removed in v2)
     - testableexamples
     - testifylint
     - thelper
@@ -147,6 +74,77 @@ linters:
     - wrapcheck
     - zerologlint
 
+  settings:
+    depguard:
+      rules:
+        main:
+          allow:
+            - "$gostd"
+            - "github.com"
+    dupl:
+      threshold: 100
+    funlen:
+      lines: 100
+      statements: 50
+    goconst:
+      min-len: 2
+      min-occurrences: 3
+    gocritic:
+      enabled-checks:
+        - deferInLoop
+        - deferUnlambda
+        - dupImport
+        - emptyFallthrough
+        - emptyStringTest
+        - octalLiteral
+    gocyclo:
+      min-complexity: 15
+    gofmt:
+      rewrite-rules:
+        - pattern: "interface{}"
+          replacement: "any"
+        - pattern: "a[b:len(a)]"
+          replacement: "a[b:]"
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+    lll:
+      line-length: 120
+      tab-width: 4
+    misspell:
+      locale: US
+    nolintlint:
+      allow-unused: false
+      require-explanation: false
+      require-specific: true
+    tagalign:
+      align: true
+      sort: true
+      order:
+        - json
+      strict: true
+    testifylint:
+      enable-all: true
+    usestdlibvars:
+      time-month: true
+      time-layout: true
+      crypto-hash: true
+      default-rpc-path: true
+      sql-isolation-level: true
+      tls-signature-scheme: true
+      constant-kind: true
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - wrapcheck
+        - errcheck
+    - path: ^examples\
+      linters:
+        - errcheck
+
 run:
-  allow-parallel-runners: true
   timeout: 5m
+  # allow-parallel-runners removed in v2 — parallel execution is now the default
