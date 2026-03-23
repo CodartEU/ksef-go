@@ -1,29 +1,152 @@
-version: "2"
-
-linters:
-  default: none
-  enable:
-    - govet
-    - errcheck
-    - staticcheck
-    - unused
-    - gosimple
-
 linters-settings:
-  errcheck:
-    # Report on assignments of errors to the blank identifier.
-    check-blank: true
-    # Report on type assertions without an ok variable.
-    check-type-assertions: true
+  depguard:
+    rules:
+      main:
+        allow:
+          - "$gostd"
+          - "github.com"
+  dupl:
+    threshold: 100
+  funlen:
+    lines: 100
+    statements: 50
+  goconst:
+    min-len: 2
+    min-occurrences: 3
+  gocritic:
+    enabled-checks:
+      - deferInLoop
+      - deferUnlambda
+      - dupImport
+      - emptyFallthrough
+      - emptyStringTest
+      - octalLiteral
+  gocyclo:
+    min-complexity: 15
+  gofmt:
+    rewrite-rules:
+      - pattern: "interface{}"
+        replacement: "any"
+      - pattern: "a[b:len(a)]"
+        replacement: "a[b:]"
   govet:
+    # settings:
+    #   shadow:
+    #     strict: true
     enable-all: true
+    disable:
+      - fieldalignment
+  lll:
+    line-length: 120
+    tab-width: 4
+  misspell:
+    locale: US
+  nolintlint:
+    allow-unused: false
+    require-explanation: false
+    require-specific: true
+  tagalign:
+    align: true
+    sort: true
+    order:
+      - json #json tag first, other tags alphabetically
+    strict: true
+  testifylint:
+    enable-all: true
+  usestdlibvars:
+    time-month: true
+    time-layout: true
+    crypto-hash: true
+    default-rpc-path: true
+    sql-isolation-level: true
+    tls-signature-scheme: true
+    constant-kind: true
 
+# Excluding configuration per-path, per-linter, per-text and per-source
 issues:
-  # Don't limit the number of issues per linter.
-  max-issues-per-linter: 0
-  max-same-issues: 0
   exclude-rules:
-    # Example files are intentionally simplified; relax error-checking there.
-    - path: ^examples/
+    - path: _test\.go
+      linters:
+        - wrapcheck
+        - errcheck
+    - path: ^examples\
       linters:
         - errcheck
+
+linters:
+  disable-all: true
+  enable:
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - depguard
+    - dogsled
+    - dupword
+    - durationcheck
+    - errcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - execinquery
+    - forcetypeassert
+    - funlen
+    - ginkgolinter
+    - gocheckcompilerdirectives
+    - gocognit
+    - goconst
+    - gocritic
+    - gofmt
+    - gofumpt
+    - gomnd
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - importas
+    - inamedparam
+    - ineffassign
+    - lll
+    - loggercheck
+    - makezero
+    - mirror
+    - misspell
+    - musttag
+    - nakedret
+    - nestif
+    - nilerr
+    - nilnil
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - perfsprint
+    - prealloc
+    - predeclared
+    - protogetter
+    - reassign
+    - revive
+    - rowserrcheck
+    - sloglint
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tagalign
+    - tenv
+    - testableexamples
+    - testifylint
+    - thelper
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - whitespace
+    - wrapcheck
+    - zerologlint
+
+run:
+  allow-parallel-runners: true
+  timeout: 5m
